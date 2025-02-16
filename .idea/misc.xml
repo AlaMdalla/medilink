@@ -5,6 +5,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/microservices/ordenance/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/notification/pom.xml" />
       </list>
     </option>
   </component>
