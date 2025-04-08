@@ -20,11 +20,13 @@ public class GetwayApplication {
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder){
 		//return builder.routes().route("candidat",r->r.path("/candidats/**").uri("http://localhost:8054")).build();
-		return builder.routes().route("problem",r->r.path("/problems/**").uri("lb://SERVICEPROBLEMS"))
-				.route("submition",r->r.path("/submitions/**").uri("lb://SERVICEPROBLEMS"))
-				.route("blog",r->r.path("/blog/**").uri("lb://BLOG"))
-				.route("training",r->r.path("/trainings/**").uri("lb://TRAINING"))
-				.route("question",r->r.path("/question/**").uri("lb://TRAINING"))
+		return builder.routes().route("notification",r->r.path("/notification/**").uri("lb://SERVICENOTIFICATION"))
+				.route("ordenance",r->r.path("/ordenance/**").uri("lb://SERVICEORDENANCE"))
+				.route("paiement",r->r.path("/paiement/**").uri("lb://PAIEMENT"))
+				.route("rendez-vous",r->r.path("/rendez-vous/**").uri("lb://RENDEZ-VOUS"))
+				.route("user",r->r.path("/user/**").uri("lb://USER"))
+				.route("consultation",r->r.path("/consultation/**").uri("lb://CONSULTATION"))
+
 
 				.build();
 
