@@ -7,6 +7,8 @@
         <option value="$PROJECT_DIR$/microservices/ordenance/pom.xml" />
         <option value="$PROJECT_DIR$/microservices/notification/pom.xml" />
         <option value="$PROJECT_DIR$/microservices/eureka-server/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/gateway/getway/pom.xml" />
       </list>
     </option>
   </component>
