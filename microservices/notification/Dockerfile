@@ -1,0 +1,3 @@
+FROM openjdk:17
+EXPOSE 8040
+ADD 
