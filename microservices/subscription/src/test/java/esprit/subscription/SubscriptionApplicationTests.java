@@ -1,10 +1,10 @@
-package com.example.paiement;
+package esprit.subscription;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PaiementApplicationTests {
+class SubscriptionApplicationTests {
 
 	@Test
 	void contextLoads() {

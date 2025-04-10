@@ -5,6 +5,7 @@ import com.example.notification.entities.Notification;
 import com.example.notification.entities.NotificationStatus;
 import com.example.notification.services.NotificationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,14 @@ public class NotificationController {
     @PutMapping("/{id}/status")
     public void updateStatus(@PathVariable Long id, @RequestParam NotificationStatus status) {
         notificationService.updateNotificationStatus(id, status);
+    }
+    @Value("${welcome.message}")
+    private String message;
+    //simple web service for testing
+    @GetMapping("/hello")
+    public String sayHello() {
+
+        return message;
     }
 }
 

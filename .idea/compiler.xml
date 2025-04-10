@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -9,8 +10,19 @@
         <module name="notification" />
         <module name="config-server" />
         <module name="getway" />
+        <module name="rendez-vous" />
+        <module name="paiement" />
         <module name="eureka-server" />
         <module name="ordenance" />
+      </profile>
+      <profile name="Annotation profile for subscription" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
+        </processorPath>
+        <module name="subscription" />
       </profile>
     </annotationProcessing>
   </component>
@@ -21,6 +33,9 @@
       <module name="getway" options="-parameters" />
       <module name="notification" options="-parameters" />
       <module name="ordenance" options="-parameters" />
+      <module name="paiement" options="-parameters" />
+      <module name="rendez-vous" options="-parameters" />
+      <module name="subscription" options="-parameters" />
     </option>
   </component>
 </project>
