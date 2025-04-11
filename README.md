@@ -42,9 +42,3 @@ medilink/ │ ├── config-server 📁 Centralized configuration ├── e
   ```bash
    cd config-server
    mvn spring-boot:run
-3. **Start Eureka Server:**:
-
-
-
-
-
