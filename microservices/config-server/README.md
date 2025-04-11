@@ -1,0 +1,102 @@
+# 🛠️ Config Server - Medilink Microservices
+
+This is the **Central Configuration Server** for the Medilink Microservices Architecture. It serves externalized configuration properties to all other microservices in the system using Spring Cloud Config.
+
+---
+
+## 📌 Features
+
+- Centralized configuration management
+- Supports local files or remote Git config repositories
+- Automatically updates client configs via Spring Cloud Bus (optional)
+
+---
+
+## 🚀 Getting Started
+
+### 📁 Folder Structure
+
+```
+config-server/
+├── src/
+├── application.yml
+└── pom.xml
+```
+
+### ⚙️ Configuration Example
+
+```yaml
+server:
+  port: 8888
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/<your-username>/<your-config-repo>
+          clone-on-start: true
+  application:
+    name: config-server
+```
+
+### ▶️ Run the Server
+
+```bash
+mvn spring-boot:run
+```
+
+Or build and run:
+
+```bash
+mvn clean package
+java -jar target/config-server-0.0.1-SNAPSHOT.jar
+```
+
+---
+
+## 🔗 Endpoint
+
+- Access config:  
+  ```
+  http://localhost:8888/{application-name}/{profile}
+  ```
+
+  Example:
+  ```
+  http://localhost:8888/user-service/dev
+  ```
+
+---
+
+## 📦 Dependencies
+
+- Spring Cloud Config Server
+- Spring Boot
+- Git (for remote config repo)
+
+---
+
+## 💡 Notes
+
+- Make sure other services have this in their `bootstrap.yml` or `application.yml`:
+
+```yaml
+spring:
+  config:
+    import: optional:configserver:http://localhost:8888
+```
+
+---
+
+## 🧠 Useful Commands
+
+```bash
+curl http://localhost:8888/user/dev
+```
+
+---
+
+## 📄 License
+
+MIT License
