@@ -21,3 +21,21 @@ Built using **Spring Boot**, **Spring Cloud**, and **Netflix Eureka**, the syste
 
 Each feature is implemented as an independent microservice:
 medilink/ │ ├── config-server 📁 Centralized configuration ├── eureka-server 📁 Service discovery with Netflix Eureka ├── gateway 📁 API gateway ├── user 📁 User management ├── consultation 📁 Medical consultations ├── notification 📁 System notifications ├── ordenance 📁 Prescription services ├── rendez-vous 📁 Appointment scheduling └── subscription 📁 User subscriptions
+
+---
+
+## 🚀 Getting Started
+
+### ✅ Prerequisites
+
+- ☕ Java 17+
+- 🧰 Maven 3.6+
+- 🐳 Docker (optional)
+
+### 🔧 Setup Instructions
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/AlaMdalla/medilink.git
+   cd medilink/microservices
+
