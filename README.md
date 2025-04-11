@@ -39,10 +39,9 @@ medilink/ │ ├── config-server 📁 Centralized configuration ├── e
    git clone https://github.com/AlaMdalla/medilink.git
    cd medilink/microservices
 2. **Start Config Server**:
-3.  ```bash
-4. cd config-server
+  ```bash
+   cd config-server
    mvn spring-boot:run
-. **Start Eureka Server**:
 
 
 
