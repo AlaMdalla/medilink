@@ -1,85 +1,90 @@
-# 🛠️ Config Server - Medilink Microservices
+# 🏥 Medilink Microservices
 
-This is the **Central Configuration Server** for the Medilink Microservices Architecture. It serves externalized configuration properties to all other microservices in the system using Spring Cloud Config.
+![Java](https://img.shields.io/badge/Java-17-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0-brightgreen)
+![Microservices](https://img.shields.io/badge/Microservices-Architecture-orange)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+Medilink is a **microservices-based healthcare application** designed to manage various aspects of medical practice, including:
+
+- 👤 User Management  
+- 📅 Consultations & Appointments  
+- 💬 Notifications  
+- 💊 Prescriptions  
+- 🧾 Subscriptions  
+
+Built using **Spring Boot**, **Spring Cloud**, and **Netflix Eureka**, the system ensures scalability, configurability, and robustness.
 
 ---
 
-## 📌 Features
+## 🗂️ Project Structure
 
-- Centralized configuration management
-- Supports local files or remote Git config repositories
-- Automatically updates client configs via Spring Cloud Bus (optional)
+Each feature is implemented as an independent microservice:
+
+```
+medilink/
+│
+├── config-server         📁 Centralized configuration
+├── eureka-server         📁 Service discovery with Netflix Eureka
+├── gateway               📁 API gateway
+├── user                  📁 User management
+├── consultation          📁 Medical consultations
+├── notification          📁 System notifications
+├── ordenance             📁 Prescription services
+├── rendez-vous           📁 Appointment scheduling
+└── subscription          📁 User subscriptions
+```
 
 ---
 
 ## 🚀 Getting Started
 
-### 📁 Folder Structure
+### ✅ Prerequisites
 
-```
-config-server/
-├── src/
-├── application.yml
-└── pom.xml
-```
+- ☕ Java 17+
+- 🧰 Maven 3.6+
+- 🐳 Docker (optional)
 
-### ⚙️ Configuration Example
+### 🔧 Setup Instructions
 
-```yaml
-server:
-  port: 8888
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/AlaMdalla/medilink.git
+   cd medilink/microservices
+   ```
 
-spring:
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/<your-username>/<your-config-repo>
-          clone-on-start: true
-  application:
-    name: config-server
-```
+2. **Start Config Server**:
+   ```bash
+   cd config-server
+   mvn spring-boot:run
+   ```
 
-### ▶️ Run the Server
+3. **Start Eureka Server**:
+   ```bash
+   cd ../eureka-server
+   mvn spring-boot:run
+   ```
 
-```bash
-mvn spring-boot:run
-```
+4. **Start API Gateway**:
+   ```bash
+   cd ../gateway
+   mvn spring-boot:run
+   ```
 
-Or build and run:
-
-```bash
-mvn clean package
-java -jar target/config-server-0.0.1-SNAPSHOT.jar
-```
-
----
-
-## 🔗 Endpoint
-
-- Access config:  
-  ```
-  http://localhost:8888/{application-name}/{profile}
-  ```
-
-  Example:
-  ```
-  http://localhost:8888/user-service/dev
-  ```
+5. **Start All Other Microservices**:
+   ```bash
+   cd ../<service-name>
+   mvn spring-boot:run
+   ```
+   Replace `<service-name>` with: `user`, `consultation`, `notification`, `ordenance`, `rendez-vous`, `subscription`
 
 ---
 
-## 📦 Dependencies
+## ⚙️ Configuration Management
 
-- Spring Cloud Config Server
-- Spring Boot
-- Git (for remote config repo)
+All configs are centralized in the **Config Server**.
 
----
-
-## 💡 Notes
-
-- Make sure other services have this in their `bootstrap.yml` or `application.yml`:
+Each service must include:
 
 ```yaml
 spring:
@@ -87,16 +92,82 @@ spring:
     import: optional:configserver:http://localhost:8888
 ```
 
+And in `application.yml` of each service:
+
+```yaml
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+```
+
 ---
 
-## 🧠 Useful Commands
+## 🌐 API Gateway Routing
 
-```bash
-curl http://localhost:8888/user/dev
+Example routes for the `gateway`:
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://user
+          predicates:
+            - Path=/users/**
+        - id: consultation-service
+          uri: lb://consultation
+          predicates:
+            - Path=/consultations/**
 ```
+
+---
+
+## 🐳 Docker Support (Optional)
+
+1. Create a `Dockerfile` in each microservice folder.
+2. Build and tag the images:
+   ```bash
+   docker build -t user-service .
+   ```
+3. Create a `docker-compose.yml` to orchestrate services.
+4. Run all containers:
+   ```bash
+   docker-compose up
+   ```
+
+---
+
+## 🔒 Security (Future Enhancement)
+
+- Spring Security + JWT / OAuth2
+- Gateway-based authentication filter
+- Role-based access control for microservices
+
+---
+
+## 📊 Monitoring & Logging (Optional)
+
+- 📈 Metrics: Prometheus + Grafana
+- 📋 Logs: ELK Stack (Elasticsearch + Logstash + Kibana)
+
+---
+
+## 🙌 Contributing
+
+Contributions are welcome!  
+Please fork the repo, create a new branch, and submit a pull request.
 
 ---
 
 ## 📄 License
 
-MIT License
+This project is licensed under the **MIT License**.  
+See the `LICENSE` file for more details.
+
+---
+
+> 🛠️ *Built with ❤️ using Spring Cloud & Microservice Best Practices*
