@@ -1,4 +1,4 @@
 FROM openjdk:17
-EXPOSE 8761
-ADD target/eureka-server-0.0.1-SNAPSHOT.jar eureka-server.jar
-ENTRYPOINT ["java", "-jar", "eureka-server.jar"]
+EXPOSE 8560
+ADD target/getway-0.0.1-SNAPSHOT.jar getway.jar
+ENTRYPOINT ["java", "-jar", "getway.jar"]

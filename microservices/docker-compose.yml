@@ -1,0 +1,141 @@
+services:
+  eureka:
+    build: ./eureka-server
+    image: eureuka:latest
+    container_name: eureuka
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+
+  gateway:
+    build: ./gateway/getway
+    image: getway:latest
+    container_name: getway
+    ports:
+      - "8560:8560"
+    depends_on:
+      - eureka
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+    networks:
+      - microservices-network
+
+  notification:
+    build: ./notification
+    image: notifications:latest
+    container_name: notifications-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka
+      - gateway
+    environment:
+      - spring.config.import=optional:configserver:http://configserver:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+    networks:
+      - microservices-network
+  consultation:
+    build: ./consultation
+    image: consultation:latest
+    container_name: consultation-service
+    ports:
+      - "8902:8902"
+    depends_on:
+      - eureka
+      - gateway
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+    networks:
+      - microservices-network
+  user:
+    build: ./user
+    image: user:latest
+    container_name: user-service
+    ports:
+      - "8901:8901"
+    depends_on:
+      - eureka
+      - gateway
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+    networks:
+      - microservices-network
+  configserver:
+    build: ./springConfig
+    image: configserver:latest
+    container_name: configserver-service
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eureka
+      - gateway
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+    networks:
+      - microservices-network
+  rendezvous:
+    build: ./rendez-vous
+    image: rendezvous:latest
+    container_name: rendezvous-service
+    ports:
+      - "8900:8900"
+    depends_on:
+      - eureka
+      - gateway
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+    networks:
+      - microservices-network
+  paiment:
+    build: ./paiement
+    image: paiement:latest
+    container_name: paiement-service
+    ports:
+      - "8086:8086"
+    depends_on:
+      - eureka
+      - gateway
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+    networks:
+      - microservices-network
+  ordenance:
+    build: ./ordenance
+    image: ordenance:latest
+    container_name: ordenance-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - Esbitarsql
+      - eureka
+      - gateway
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://Esbitarsql:3306/E-sbitar?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - microservices-network
+
+
+  Esbitarsql:
+    image: mysql:latest
+    container_name: Esbitarsql
+    environment:
+      MYSQL_ROOT_PASSWORD: ala
+      MYSQL_DATABASE: E-sbitar
+    volumes:
+      - ../Esbitarsql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pala"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge  # Fixed comment

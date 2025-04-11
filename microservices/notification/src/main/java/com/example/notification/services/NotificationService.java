@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NotificationService {
 
-    private final NotificationRepository notificationRepository;
+    private  NotificationRepository notificationRepository;
 
     public Notification sendNotification(Notification notification) {
         notification.setStatus(NotificationStatus.PENDING);

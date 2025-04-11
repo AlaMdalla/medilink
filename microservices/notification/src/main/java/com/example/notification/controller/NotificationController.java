@@ -8,14 +8,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@CrossOrigin(origins = "*")
 
 @RestController
 @RequestMapping("/notifications")
 @RequiredArgsConstructor
 public class NotificationController {
 
-    private final NotificationService notificationService;
-
+    private  NotificationService notificationService;
+    @GetMapping("")
+    public String hello() {
+        return"hellpo";
+    }
     @PostMapping
     public Notification createNotification(@RequestBody Notification notification) {
         return notificationService.sendNotification(notification);

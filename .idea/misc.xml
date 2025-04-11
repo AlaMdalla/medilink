@@ -7,6 +7,12 @@
         <option value="$PROJECT_DIR$/microservices/ordenance/pom.xml" />
         <option value="$PROJECT_DIR$/microservices/notification/pom.xml" />
         <option value="$PROJECT_DIR$/microservices/eureka-server/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/springConfig/springConfig/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/paiement/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/gateway/getway/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/rendez-vous/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/user/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/consultation/pom.xml" />
       </list>
     </option>
   </component>

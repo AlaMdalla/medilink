@@ -5,6 +5,7 @@ import com.example.ordenance.DTO.PrescriptionDTO;
 import com.example.ordenance.entities.Prescription;
 import com.example.ordenance.repository.PrescriptionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +15,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PrescriptionService {
-
-    private final PrescriptionRepository prescriptionRepository;
+@Autowired
+    private  PrescriptionRepository prescriptionRepository;
 
     public List<PrescriptionDTO> getAllPrescriptions() {
         return prescriptionRepository.findAll()

@@ -4,6 +4,7 @@ package com.example.ordenance.controller;
 import com.example.ordenance.DTO.PrescriptionDTO;
 import com.example.ordenance.services.PrescriptionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +14,16 @@ import java.util.List;
 @RequestMapping("/api/prescriptions")
 @RequiredArgsConstructor
 public class PrescriptionController {
-
-    private final PrescriptionService prescriptionService;
+@Autowired
+    private  PrescriptionService prescriptionService;
 
     @GetMapping
     public ResponseEntity<List<PrescriptionDTO>> getAllPrescriptions() {
         return ResponseEntity.ok(prescriptionService.getAllPrescriptions());
+    }
+    @GetMapping("/hello")
+    public ResponseEntity<String> sayHello() {
+        return ResponseEntity.ok("Hello from Prescription Service!");
     }
 
     @GetMapping("/{id}")
