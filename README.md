@@ -20,4 +20,4 @@ Built using **Spring Boot**, **Spring Cloud**, and **Netflix Eureka**, the syste
 ## 🗂️ Project Structure
 
 Each feature is implemented as an independent microservice:
-
+medilink/ │ ├── config-server 📁 Centralized configuration ├── eureka-server 📁 Service discovery with Netflix Eureka ├── gateway 📁 API gateway ├── user 📁 User management ├── consultation 📁 Medical consultations ├── notification 📁 System notifications ├── ordenance 📁 Prescription services ├── rendez-vous 📁 Appointment scheduling └── subscription 📁 User subscriptions
