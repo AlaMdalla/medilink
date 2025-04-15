@@ -4,6 +4,7 @@
     <file url="file://$PROJECT_DIR$/microservices/consultation/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/eureka-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/gateway/getway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/keycloak-integration-with-spring-boot-3-main/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/notification/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/notification/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservices/ordenance/src/main/java" charset="UTF-8" />

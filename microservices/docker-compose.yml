@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   eureka:
     build: ./eureka-server
@@ -21,6 +22,19 @@ services:
     networks:
       - microservices-network
 
+  node-service:
+    build: ./support
+    image: node-service:latest
+    container_name: node-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - eureka
+    environment:
+      - EUREKA_URL=http://eureka:8761/eureka/
+    networks:
+      - microservices-network
+
   notification:
     build: ./notification
     image: notifications:latest
@@ -35,6 +49,7 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
     networks:
       - microservices-network
+
   consultation:
     build: ./consultation
     image: consultation:latest
@@ -48,19 +63,36 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
     networks:
       - microservices-network
-  user:
-    build: ./user
-    image: user:latest
-    container_name: user-service
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0.6
+    container_name: keycloak
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
     ports:
-      - "8901:8901"
+      - "8080:8080"
+    volumes:
+      - ./keycloak-data:/opt/keycloak/data
+
+    command: start-dev
+    networks:
+      - microservices-network
+
+  user:
+    build: ./keycloak-integration-with-spring-boot-3-main
+    image: user_keycloak:latest
+    container_name: user_keycloak
+    ports:
+      - "8081:8081"
     depends_on:
       - eureka
       - gateway
+      - keycloak
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
     networks:
       - microservices-network
+
   configserver:
     build: ./springConfig
     image: configserver:latest
@@ -74,6 +106,7 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
     networks:
       - microservices-network
+
   rendezvous:
     build: ./rendez-vous
     image: rendezvous:latest
@@ -87,6 +120,7 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
     networks:
       - microservices-network
+
   paiment:
     build: ./paiement
     image: paiement:latest
@@ -100,6 +134,7 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
     networks:
       - microservices-network
+
   ordenance:
     build: ./ordenance
     image: ordenance:latest
@@ -116,7 +151,6 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - microservices-network
-
 
   Esbitarsql:
     image: mysql:latest
@@ -138,4 +172,4 @@ services:
 
 networks:
   microservices-network:
-    driver: bridge  # Fixed comment
+    driver: bridge

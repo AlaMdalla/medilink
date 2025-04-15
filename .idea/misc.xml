@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/microservices/rendez-vous/pom.xml" />
         <option value="$PROJECT_DIR$/microservices/user/pom.xml" />
         <option value="$PROJECT_DIR$/microservices/consultation/pom.xml" />
+        <option value="$PROJECT_DIR$/microservices/keycloak-integration-with-spring-boot-3-main/pom.xml" />
       </list>
     </option>
   </component>

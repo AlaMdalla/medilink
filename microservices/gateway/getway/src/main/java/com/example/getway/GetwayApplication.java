@@ -26,6 +26,8 @@ public class GetwayApplication {
 				.route("user",r->r.path("/user/**").uri("lb://USER"))
 				.route("consultation",r->r.path("/consultation/**").uri("lb://CONSULTATION"))
 				.route("config-server",r->r.path("/config-server/**").uri("lb://config-server"))
+				.route("NODE-SERVICE",r->r.path("/support/**").uri("lb://NODE-SERVICE"))
+
 
 
 
