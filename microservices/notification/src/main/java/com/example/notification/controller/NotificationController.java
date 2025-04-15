@@ -1,6 +1,5 @@
 package com.example.notification.controller;
 
-
 import com.example.notification.entities.Notification;
 import com.example.notification.entities.NotificationStatus;
 import com.example.notification.services.NotificationService;
@@ -8,22 +7,32 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin(origins = "*")
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/notifications")
 @RequiredArgsConstructor
 public class NotificationController {
 
-    private  NotificationService notificationService;
+    private final NotificationService notificationService;
+
+    public NotificationController(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
     @GetMapping("")
     public String hello() {
-        return"hellpo";
+        return "hello";
     }
-    @PostMapping
+
+    @PostMapping("/add")
     public Notification createNotification(@RequestBody Notification notification) {
-        return notificationService.sendNotification(notification);
+        System.out.println("Received notification: " + notification);
+        Notification saved = notificationService.sendNotification(notification);
+        System.out.println("Saved notification: " + saved);
+        return saved;
     }
+
 
     @GetMapping("/user/{userId}")
     public List<Notification> getNotifications(@PathVariable Long userId) {
@@ -35,4 +44,3 @@ public class NotificationController {
         notificationService.updateNotificationStatus(id, status);
     }
 }
-

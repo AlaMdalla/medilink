@@ -1,52 +1,64 @@
-const express = require('express');
+const http = require('http');
 const Eureka = require('eureka-js-client').Eureka;
 
-const app = express();
+// Create an HTTP server
+const server = http.createServer((req, res) => {
+  // Handle different routes
+  if (req.url === '/support/hello') {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({ message: 'Hello from the support service!' }));
+  } else {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello, World!\n');
+  }
+});
+
 const PORT = 3000;
 
-// Log environment variables for debugging
-console.log('EUREKA_URL:', process.env.EUREKA_URL);
-
-// Eureka client configuration
-const eurekaUrl = process.env.EUREKA_URL || 'http://eureka:8761/eureka/';
-console.log('Using Eureka URL:', eurekaUrl);
-
+// Configure Eureka client
 const client = new Eureka({
   instance: {
-    app: 'node-app',
-    hostName: 'node-service',
-    ipAddr: 'node-service', // Matches container_name
+    app: 'node-service',
+    hostName: 'localhost',
+    ipAddr: '127.0.0.1',
     port: {
       '$': PORT,
       '@enabled': true,
     },
-    vipAddress: 'node-app',
+    vipAddress: 'node-service',
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
     },
-    registerWithEureka: true,
-    fetchRegistry: true,
   },
   eureka: {
-    serviceUrls: {
-      default: [eurekaUrl],
-    },
-    maxRetries: 10,
-    requestRetryDelay: 2000,
+    host: 'localhost',
+    port: 8761,
+    servicePath: '/eureka/apps/',
   },
 });
 
-// Start Eureka client
-client.start((error) => {
-  console.log(error || 'Eureka client started');
+// Start the server and register with Eureka
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+
+  // Start Eureka client
+  client.start(error => {
+    if (error) {
+      console.log('Error registering with Eureka:', error);
+      return;
+    }
+    console.log('Registered with Eureka server at http://localhost:8761');
+  });
 });
 
-// Simple endpoint to test
-app.get('/', (req, res) => {
-  res.send('hello docker');
-});
-
-app.listen(PORT, () => {
-  console.log(`Node.js server running on port ${PORT}`);
+// Handle shutdown gracefully
+process.on('SIGINT', () => {
+  client.stop();
+  server.close(() => {
+    console.log('Server and Eureka client stopped');
+    process.exit();
+  });
 });

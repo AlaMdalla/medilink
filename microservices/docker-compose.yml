@@ -79,7 +79,7 @@ services:
       - microservices-network
 
   user:
-    build: ./keycloak-integration-with-spring-boot-3-main
+    build: ./keycloak
     image: user_keycloak:latest
     container_name: user_keycloak
     ports:

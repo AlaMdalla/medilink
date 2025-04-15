@@ -7,8 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="notification" />
+        <module name="getway" />
+        <module name="rendez-vous" />
         <module name="keycloak" />
+        <module name="paiement" />
+        <module name="springConfig" />
+        <module name="consultation" />
         <module name="user" />
+        <module name="eureka-server" />
         <module name="ordenance" />
       </profile>
     </annotationProcessing>

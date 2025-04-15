@@ -1,6 +1,6 @@
-package com.example.notification.entities;
+    package com.example.notification.entities;
 
-public enum NotificationStatus {
-    SENT, PENDING
+    public enum NotificationStatus {
+        SENT, PENDING
 
-}
+    }
