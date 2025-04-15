@@ -1,0 +1,27 @@
+<div class="rendezvous-container">
+  <h2 class="form-title">Rendez-Vous</h2>
+  <div class="form-actions">
+    
+  </div>
+  <table class="rendezvous-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rv of rendezVousList">
+        <td>{{ rv.id }}</td>
+        <td>{{ rv.date  }}</td>
+        <td>{{ rv.status }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="editRendezVous(rv)">Edit</button>
+          <button class="btn btn-secondary" (click)="deleteRendezVous(rv.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

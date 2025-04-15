@@ -1,0 +1,145 @@
+/* Hero section */
+.hero {
+  background: linear-gradient(90deg, #1e3a8a, #3b82f6); /* Deep navy blue gradient, matching header */
+  color: #ffffff;
+  padding: 80px 0 100px 0; /* Added 100px bottom padding for spacing */
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/white-diamond.png');
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.hero-content {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.hero-content p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: #e0e0e0;
+}
+
+.hero-content .cta-button {
+  display: inline-block;
+  background: #2dd4bf;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(45, 212, 191, 0.3);
+}
+
+.hero-content .cta-button:hover {
+  background: #5eead4;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(94, 234, 212, 0.4);
+}
+
+/* Ensure child components have proper spacing with bottom padding */
+app-courses,
+app-competitions,
+app-view-all {
+  display: block;
+  margin: 40px 0;
+  padding-bottom: 60px; /* Added bottom padding for spacing */
+}
+
+/* Features section */
+.features {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0 60px 0; /* Added 60px bottom padding for spacing */
+}
+
+/* Features header */
+.features h2 {
+  font-size: 36px;
+  color: #1e3a8a;
+  text-align: center;
+  margin-bottom: 50px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.features h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 4px;
+  background: #2dd4bf;
+  border-radius: 2px;
+}
+
+/* Features container */
+.features .container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Feature item */
+.feature-item {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feature-item h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin-bottom: 10px;
+}
+
+.feature-item p {
+  font-size: 14px;
+  color: #1f2937;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Ensure footer spacing */
+app-footer {
+  display: block;
+  margin-top: 40px;
+  padding-bottom: 60px; /* Added bottom padding for spacing */
+}

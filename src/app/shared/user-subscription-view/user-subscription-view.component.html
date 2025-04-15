@@ -1,0 +1,87 @@
+<div class="subscriptions-display-container">
+  <!-- Header Section -->
+  <div class="management-header">
+    <h2>My Subscriptions</h2>
+    <p class="header-subtitle">Manage your current subscriptions and payment status</p>
+  </div>
+
+  <!-- Status Filter -->
+  <div class="filter-container" style="margin-bottom: 30px; text-align: center;">
+    <label for="statusFilter" style="font-size: 16px; color: #666; margin-right: 10px;">Filter by Status:</label>
+    <select id="statusFilter" [(ngModel)]="selectedStatus" (change)="onStatusFilterChange()" 
+            style="padding: 8px 15px; border-radius: 6px; border: 1px solid #ddd; font-size: 14px;">
+      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+    </select>
+  </div>
+
+  <!-- Active Subscription Countdown -->
+  <div *ngIf="activeSubscription" class="subscription-card popular" style="margin-bottom: 40px;">
+    <div class="popular-badge">Active</div>
+    <div class="subscription-header">
+      <h3 class="subscription-title">Current Subscription</h3>
+      <p class="subscription-description">You're currently subscribed to {{ activeSubscription.typesub }}</p>
+    </div>
+    
+    <div class="subscription-pricing">
+      <div class="discounted-price">
+        <span class="price-amount">{{ countdown }}</span>
+        <span class="price-period">remaining</span>
+      </div>
+      <p class="actual-price">Ends on {{ activeSubscription.endDate | date:'mediumDate' }}</p>
+    </div>
+    
+    <div *ngIf="isNearingExpiration(activeSubscription.endDate)" class="renewal-suggestion" style="text-align: center; margin-bottom: 20px;">
+      <p class="warning" style="color: #ef4444; font-size: 14px; margin-bottom: 15px;">
+        Your subscription is expiring soon! Consider renewing to continue enjoying the benefits.
+      </p>
+      <button class="btn-subscribe" (click)="renewSubscription(activeSubscription.subid)">Renew Now</button>
+    </div>
+  </div>
+
+  <!-- Subscription List -->
+  <div class="subscriptions-grid">
+    <div *ngFor="let sub of filteredSubscriptions" class="subscription-card" [class.popular]="sub.status === 'success'">
+      <div class="subscription-header">
+        <h3 class="subscription-title">{{ sub.typesub }}</h3>
+        <p class="subscription-description">
+          Status: {{ sub.status }}
+          <span *ngIf="isNearingExpiration(sub.endDate) && sub.status === 'success'" class="expiring-indicator" title="Expiring Soon!">
+            ⚠️
+          </span>
+        </p>
+      </div>
+      
+      <div *ngIf="sub.endDate && sub.endDate !== 'NULL'" class="subscription-pricing">
+        <div class="discounted-price">
+          <span class="price-amount">{{ getTimeRemaining(sub.endDate) }}</span>
+          <span class="price-period">remaining</span>
+        </div>
+        <p class="actual-price">Ends on {{ sub.endDate | date:'mediumDate' }}</p>
+      </div>
+      
+      <div *ngIf="isNearingExpiration(sub.endDate) && sub.status === 'success'" class="renewal-suggestion" style="text-align: center; margin-bottom: 20px;">
+        <p class="warning" style="color: #ef4444; font-size: 14px; margin-bottom: 15px;">
+          This subscription is expiring soon!
+        </p>
+      </div>
+      
+      <div class="subscription-actions">
+        <button *ngIf="canPayForSubscription(sub)" 
+                class="btn-subscribe" 
+                (click)="payForSubscription(sub.subid)">
+          Pay Now
+        </button>
+        <button *ngIf="sub.status === 'success'" 
+                class="btn-subscribe" 
+                style="background: linear-gradient(90deg, #ef4444, #f87171); margin-left: 10px;"
+                (click)="cancelSubscription(sub.subid)">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!filteredSubscriptions.length" class="no-subscriptions">
+    <p>No subscriptions found matching your criteria.</p>
+  </div>
+</div>

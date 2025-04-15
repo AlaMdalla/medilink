@@ -1,0 +1,28 @@
+<div class="container">
+        <p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
+        <h2>Update User</h2>
+        <form (ngSubmit)="updateUser()" class="update-form">
+            <div class="form-card">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" [(ngModel)]="userData.name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" [(ngModel)]="userData.email" required>
+                </div>
+                <div class="form-group" *ngIf="isAdmin">
+                    <label for="role">Role:</label>
+                    <input type="text" id="role" name="role" [(ngModel)]="userData.role" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" [(ngModel)]="userData.city" required>
+                </div>
+            </div>
+            <button type="submit" class="update-btn" [disabled]="isLoading">
+                <span class="btn-text">{{ isLoading ? 'Updating...' : 'Update' }}</span>
+                <span class="btn-icon" [ngClass]="{'loading': isLoading}"></span>
+            </button>
+        </form>
+    </div>
