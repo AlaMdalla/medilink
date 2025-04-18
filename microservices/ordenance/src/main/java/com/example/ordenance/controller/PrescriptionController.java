@@ -31,7 +31,7 @@ public class PrescriptionController {
         return ResponseEntity.ok(prescriptionService.getPrescriptionById(id));
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<PrescriptionDTO> createPrescription(@RequestBody PrescriptionDTO dto) {
         return ResponseEntity.ok(prescriptionService.createPrescription(dto));
     }

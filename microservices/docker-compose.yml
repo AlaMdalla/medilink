@@ -1,39 +1,44 @@
 version: '3.8'
+
 services:
   eureka:
     build: ./eureka-server
-    image: eureuka:latest
-    container_name: eureuka
+    image: eureka:latest
+    container_name: eureka
     ports:
       - "8761:8761"
     networks:
       - microservices-network
+    depends_on:
+      - configserver
+    restart: always
 
   gateway:
     build: ./gateway/getway
-    image: getway:latest
-    container_name: getway
+    image: gateway:latest
+    container_name: gateway
     ports:
       - "8560:8560"
     depends_on:
+      - configserver
       - eureka
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
     networks:
       - microservices-network
+    restart: always
 
-  node-service:
-    build: ./support
-    image: node-service:latest
-    container_name: node-service
+  configserver:
+    build: ./springConfig
+    image: configserver:latest
+    container_name: configserver-service
     ports:
-      - "3000:3000"
-    depends_on:
-      - eureka
+      - "8888:8888"
     environment:
-      - EUREKA_URL=http://eureka:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
     networks:
       - microservices-network
+    restart: always
 
   notification:
     build: ./notification
@@ -44,11 +49,13 @@ services:
     depends_on:
       - eureka
       - gateway
+      - configserver
     environment:
-      - spring.config.import=optional:configserver:http://configserver:8888
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
     networks:
       - microservices-network
+    restart: always
 
   consultation:
     build: ./consultation
@@ -57,12 +64,17 @@ services:
     ports:
       - "8902:8902"
     depends_on:
+      - configserver
+      - Esbitarsql
       - eureka
       - gateway
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://Esbitarsql:3306/E-sbitar?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
     networks:
       - microservices-network
+    restart: always
+
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.6
     container_name: keycloak
@@ -73,10 +85,10 @@ services:
       - "8080:8080"
     volumes:
       - ./keycloak-data:/opt/keycloak/data
-
     command: start-dev
     networks:
       - microservices-network
+    restart: always
 
   user:
     build: ./keycloak
@@ -85,27 +97,15 @@ services:
     ports:
       - "8081:8081"
     depends_on:
+      - configserver
       - eureka
       - gateway
       - keycloak
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
     networks:
       - microservices-network
-
-  configserver:
-    build: ./springConfig
-    image: configserver:latest
-    container_name: configserver-service
-    ports:
-      - "8888:8888"
-    depends_on:
-      - eureka
-      - gateway
-    environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
-    networks:
-      - microservices-network
+    restart: always
 
   rendezvous:
     build: ./rendez-vous
@@ -114,26 +114,34 @@ services:
     ports:
       - "8900:8900"
     depends_on:
+      - Esbitarsql
       - eureka
       - gateway
+      - configserver
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://Esbitarsql:3306/E-sbitar?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
     networks:
       - microservices-network
+    restart: always
 
-  paiment:
-    build: ./paiement
-    image: paiement:latest
-    container_name: paiement-service
+  subscription:
+    build: ./subscription
+    image: subscription:latest
+    container_name: subscription-service
     ports:
       - "8086:8086"
     depends_on:
+      - Esbitarsql
       - eureka
+      - configserver
       - gateway
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://Esbitarsql:3306/E-sbitar?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
     networks:
       - microservices-network
+    restart: always
 
   ordenance:
     build: ./ordenance
@@ -144,13 +152,15 @@ services:
     depends_on:
       - Esbitarsql
       - eureka
+      - configserver
       - gateway
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://Esbitarsql:3306/E-sbitar?createDatabaseIfNotExist=true
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureuka:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - microservices-network
+    restart: always
 
   Esbitarsql:
     image: mysql:latest
@@ -169,6 +179,7 @@ services:
       retries: 5
     networks:
       - microservices-network
+    restart: always
 
 networks:
   microservices-network:

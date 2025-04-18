@@ -11,7 +11,6 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/notifications")
-@RequiredArgsConstructor
 public class NotificationController {
 
     private final NotificationService notificationService;
@@ -21,9 +20,8 @@ public class NotificationController {
     }
 
     @GetMapping("")
-    public String hello() {
-        return "hello";
-    }
+    public List<Notification> hello() {
+        return  this.notificationService.getAllNotifications();   }
 
     @PostMapping("/add")
     public Notification createNotification(@RequestBody Notification notification) {

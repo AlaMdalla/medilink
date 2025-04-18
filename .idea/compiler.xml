@@ -10,14 +10,25 @@
         <module name="getway" />
         <module name="rendez-vous" />
         <module name="keycloak" />
-        <module name="paiement" />
         <module name="springConfig" />
         <module name="consultation" />
         <module name="user" />
         <module name="eureka-server" />
         <module name="ordenance" />
       </profile>
+      <profile name="Annotation profile for subscription" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="subscription" />
+      </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="paiement" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -30,6 +41,7 @@
       <module name="paiement" options="-parameters" />
       <module name="rendez-vous" options="-parameters" />
       <module name="springConfig" options="-parameters" />
+      <module name="subscription" options="-parameters" />
       <module name="user" options="-parameters" />
     </option>
   </component>

@@ -10,14 +10,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class NotificationService {
 
     private  NotificationRepository notificationRepository;
-
+    public NotificationService(NotificationRepository notificationRepository) {
+        this.notificationRepository = notificationRepository;
+    }
     public Notification sendNotification(Notification notification) {
         notification.setStatus(NotificationStatus.PENDING);
         return notificationRepository.save(notification);
+    }
+    public List<Notification> getAllNotifications() {
+        return notificationRepository.findAll();
     }
 
     public List<Notification> getNotificationsByUserId(Long userId) {
