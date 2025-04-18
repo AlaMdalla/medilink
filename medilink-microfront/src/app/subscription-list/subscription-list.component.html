@@ -1,0 +1,79 @@
+<div class="subscription-container">
+  <div class="header-section">
+    <h2 class="form-title">Subscription Management</h2>
+    <div class="form-actions">
+      <!-- Search by Type -->
+      <div class="search-container">
+        <label for="searchType">Search by Type:</label>
+        <input
+          id="searchType"
+          type="text"
+          [(ngModel)]="searchType"
+          (ngModelChange)="onSearchTypeChange()"
+          placeholder="Enter subscription type..."
+        />
+      </div>
+      <!-- Sort by Actual Price -->
+      <div class="sort-container">
+        <label for="sortOrder">Sort by Actual Price:</label>
+        <select
+          id="sortOrder"
+          [(ngModel)]="sortOrder"
+          (ngModelChange)="onSortChange(sortOrder)"
+        >
+          <option value="none">None</option>
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn-primary" (click)="addNewSubscription()">
+      <i class="fas fa-plus"></i> Add New Subscription
+    </button>
+  </div>
+
+  <div *ngIf="filteredSubscriptions.length === 0" class="empty-state">
+    <i class="fas fa-box-open empty-icon"></i>
+    <h3>No Subscriptions Available</h3>
+    <p>You don't have any subscriptions yet. Click the button above to add one.</p>
+  </div>
+
+  <div *ngIf="filteredSubscriptions.length > 0" class="table-responsive">
+    <table class="subscription-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th class="text-right">Discounted Price</th>
+          <th class="text-right">Actual Price</th>
+          <th>Status</th>
+          <th class="actions-header">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sub of filteredSubscriptions">
+          <td class="id-cell">{{ sub.subid }}</td>
+          <td><span class="badge badge-type">{{ sub.typesub }}</span></td>
+          <td class="description-cell">{{ sub.subsDescription }}</td>
+          <td class="text-right">{{ sub.subsDiscountedPrice }} USD</td>
+          <td class="text-right">{{ sub.subsActualPrice }} USD</td>
+          <td>
+            <span class="badge" [ngClass]="{
+              'badge-success': sub.status === 'success',
+              'badge-warning': !sub.status || sub.status !== 'success'
+            }">
+              {{ sub.status || 'Not Paid' }}
+            </span>
+          </td>
+          <td class="actions-cell">
+            <button class="btn-text btn-edit" (click)="editSubscription(sub.subid)">Edit</button>
+            <button class="btn-text btn-delete" (click)="deleteSubscription(sub.subid)">Delete</button>
+            <button class="btn-pay" (click)="payForSubscription(sub.subid)" 
+                    [disabled]="sub.status === 'success'">Pay</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

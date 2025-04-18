@@ -1,0 +1,42 @@
+<header>
+  <div class="container">
+      <!-- Logo -->
+      <div class="logo">
+          <a href="#">Medlink</a>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="nav">
+        <ul class="nav-list">
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/listsub">payment</a></li>
+          <li><a routerLink="/ordonform">notification</a></li>
+          <li><a routerLink="/consultation-form">consultation</a></li>
+          <li><a routerLink="/rendezvous-form">rendezvous</a></li> <!-- Updated to list -->
+          <li><a routerLink="/prescription-form">prescription</a></li>
+        </ul>
+      </nav>
+
+      <!-- Profile Icon (Visible only when authenticated) -->
+      <div class="profile-icon" *ngIf="isAuth">
+          <a (click)="goToProfile()" class="profile-link">
+            <span class="avatar-initial">{{ profileInfo?.ourUsers?.name?.charAt(0) | uppercase }}</span>
+          </a>
+      </div>
+
+      <!-- CTA Button -->
+      <div class="cta" *ngIf="!isAuth">
+          <a href="/login" class="cta-btn">Sign Up</a>
+      </div>
+      <div class="cta" *ngIf="isAuth">
+          <a (click)="logout()" class="cta-btn">Logout</a>
+      </div>
+
+      <!-- Hamburger Menu (for mobile) -->
+      <div class="hamburger" id="hamburger" (click)="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+      </div>
+  </div>
+</header>

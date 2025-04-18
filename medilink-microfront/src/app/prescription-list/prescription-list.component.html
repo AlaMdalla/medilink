@@ -1,0 +1,65 @@
+<div class="container">
+  <h2 class="form-title">Prescriptions</h2>
+  <div class="form-actions">
+    <!-- Search by Medication -->
+    <div class="search-container">
+      <label for="searchMedication">Search by Medication:</label>
+      <input
+        id="searchMedication"
+        type="text"
+        [(ngModel)]="searchMedication"
+        (ngModelChange)="onSearchMedicationChange()"
+        placeholder="Enter medication..."
+      />
+    </div>
+    <!-- Sort by Date -->
+    <div class="sort-container">
+      <label for="sortOrder">Sort by Date:</label>
+      <select
+        id="sortOrder"
+        [(ngModel)]="sortOrder"
+        (ngModelChange)="onSortChange(sortOrder)"
+      >
+        <option value="none">None</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
+  </div>
+  <button mat-raised-button color="primary" routerLink="/prescription-form">Add Prescription</button>
+  <table mat-table [dataSource]="filteredPrescriptions" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let prescription">{{ prescription.id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="doctorId">
+      <th mat-header-cell *matHeaderCellDef>Doctor ID</th>
+      <td mat-cell *matCellDef="let prescription">{{ prescription.doctorId }}</td>
+    </ng-container>
+    <ng-container matColumnDef="patientId">
+      <th mat-header-cell *matHeaderCellDef>Patient ID</th>
+      <td mat-cell *matCellDef="let prescription">{{ prescription.patientId }}</td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let prescription">{{ prescription.date | date }}</td>
+    </ng-container>
+    <ng-container matColumnDef="medicationList">
+      <th mat-header-cell *matHeaderCellDef>Medications</th>
+      <td mat-cell *matCellDef="let prescription">{{ prescription.medicationList }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let prescription">
+        <button mat-icon-button color="primary" [routerLink]="['/prescription-form', prescription.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deletePrescription(prescription.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

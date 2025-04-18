@@ -1,0 +1,36 @@
+<div class="rendezvous-container">
+  <h2 class="form-title">{{ isEditMode ? 'Edit' : 'Add' }} Rendez-Vous</h2>
+  <form class="rendezvous-form" [formGroup]="form" (ngSubmit)="save()">
+    <div class="form-group">
+      <label class="form-label" for="date">Date</label>
+      <input
+        class="form-control"
+        id="date"
+        type="datetime-local"
+        formControlName="date"
+        required
+      />
+      <div class="error-message" *ngIf="form.get('date')?.hasError('required') && form.get('date')?.touched">
+        Date is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="status">Status</label>
+      <select class="form-control" id="status" formControlName="status" required>
+        <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+      </select>
+      <div class="error-message" *ngIf="form.get('status')?.hasError('required') && form.get('status')?.touched">
+        Status is required
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-primary" type="submit" [disabled]="form.invalid">
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+      <button class="btn btn-secondary" type="button" (click)="cancel()">Cancel</button>
+    </div>
+    <a routerLink="/rendvous" class="btn btn-secondary">Back to RendezVous</a>
+  </form>
+</div>

@@ -1,0 +1,239 @@
+/* Header */
+header {
+  background: linear-gradient(90deg, rgba(30, 58, 138, 0.95), rgba(59, 130, 246, 0.95));
+  color: #ffffff;
+  padding: 20px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+:host {
+  margin-top: 80px;
+  display: block;
+}
+
+header .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  gap: 30px;
+}
+
+header .logo a {
+  font-size: 30px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 1.5px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+header .logo a:hover {
+  color: #2dd4bf;
+  transform: scale(1.05);
+}
+
+header .nav {
+  flex-grow: 1;
+}
+
+header .nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+header .nav-list li {
+  display: inline-block;
+}
+
+header .nav-list li a {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e0e0e0;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+header .nav-list li a:hover {
+  color: #ffffff;
+  background: rgba(45, 212, 191, 0.2);
+}
+
+header .nav-list li a::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 15px;
+  width: 0;
+  height: 2px;
+  background: #2dd4bf;
+  transition: width 0.3s ease;
+}
+
+header .nav-list li a:hover::after {
+  width: calc(100% - 30px);
+}
+
+header .cta {
+  display: flex;
+  align-items: center;
+}
+
+header .cta-btn {
+  background: #2dd4bf;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(45, 212, 191, 0.3);
+  border: 1px solid transparent;
+}
+
+header .cta-btn:hover {
+  background: #5eead4;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(94, 234, 212, 0.4);
+  border-color: #ffffff;
+}
+
+header .hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+header .hamburger:hover {
+  background: rgba(45, 212, 191, 0.2);
+}
+
+header .hamburger span {
+  width: 28px;
+  height: 3px;
+  background: #ffffff;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+header .hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+header .hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+header .hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Profile Icon */
+header .profile-icon {
+  display: flex;
+  align-items: center;
+}
+
+header .profile-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: #3b82f6; /* Blue background to match the provided image */
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+header .profile-link:hover {
+  background: #2dd4bf; /* Softer teal on hover for consistency */
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(94, 234, 212, 0.3);
+}
+
+header .profile-initial {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  header .container {
+      flex-wrap: wrap;
+      gap: 10px;
+  }
+
+  header .nav {
+      display: none;
+      width: 100%;
+      margin-top: 20px;
+  }
+
+  header .nav.active {
+      display: block;
+  }
+
+  header .nav-list {
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+      padding: 15px 0;
+      background: rgba(30, 58, 138, 0.95);
+      border-radius: 8px;
+  }
+
+  header .nav-list li a {
+      display: block;
+      padding: 12px;
+      font-size: 18px;
+  }
+
+  header .hamburger {
+      display: flex;
+  }
+
+  header .cta {
+      margin-left: auto;
+  }
+
+  header .profile-icon {
+      margin-left: auto;
+      margin-right: 10px;
+  }
+
+  :host {
+      margin-top: 90px;
+  }
+}
+
+section,
+app-courses,
+app-competitions,
+app-view-all,
+app-footer {
+  margin-bottom: 60px;
+}

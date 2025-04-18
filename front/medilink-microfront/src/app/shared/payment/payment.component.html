@@ -1,0 +1,68 @@
+<div class="subscriptions-display-container">
+  <div class="management-header">
+    <h2 class="payment-title">Confirm Payment</h2>
+    <p class="header-subtitle">Review your payment details before proceeding</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message" 
+       style="background: #fee2e2; color: #b91c1c; padding: 15px; border-radius: 8px; 
+              margin: 20px auto; max-width: 600px; text-align: center;">
+    <clr-icon shape="error-standard" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;"></clr-icon>
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!subscription.subid && !errorMessage && !isRetrying" class="loading-message" 
+       style="text-align: center; padding: 40px; color: #666;">
+    <clr-icon shape="hourglass" style="width: 24px; height: 24px; animation: spin 1s linear infinite;"></clr-icon>
+    <p style="margin-top: 15px;">Loading subscription details...</p>
+  </div>
+
+  <div *ngIf="isRetrying" class="retry-section" 
+       style="background: #fff; border-radius: 12px; padding: 30px; max-width: 600px; 
+              margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+    <clr-icon shape="sync" style="width: 32px; height: 32px; color: #3b82f6; animation: spin 1s linear infinite;"></clr-icon>
+    <p class="retry-text" style="font-size: 16px; margin: 20px 0;">Retrying payment... Please wait.</p>
+    <button class="btn-subscribe" 
+            style="background: linear-gradient(90deg, #ef4444, #f87171);" 
+            (click)="cancelRetry()">
+      Cancel Retry
+    </button>
+  </div>
+
+  <div *ngIf="subscription.subid && !isRetrying" class="payment-box subscription-card" 
+       style="max-width: 600px; margin: 0 auto;">
+    <div class="subscription-header">
+      <h3 class="subscription-title">Payment Summary</h3>
+    </div>
+    
+    <div class="subscription-pricing">
+      <div class="discounted-price">
+        <span class="price-amount">{{ paymentData.amount }}</span>
+        <span class="price-period">{{ paymentData.currency }}</span>
+      </div>
+      <p class="actual-price">for <em>{{ paymentData.description }}</em></p>
+    </div>
+
+    <div class="subscription-actions">
+      <button class="btn-subscribe" 
+              (click)="startPayment()" 
+              [disabled]="!subscription.subid"
+              style="padding: 12px 40px; font-size: 16px;">
+        <clr-icon shape="dollar-bill" style="width: 18px; height: 18px; margin-right: 8px;"></clr-icon>
+        Pay with PayPal
+      </button>
+    </div>
+    
+    <div style="margin-top: 20px; text-align: center; font-size: 13px; color: #666;">
+      <clr-icon shape="shield-check" style="width: 16px; height: 16px; vertical-align: middle;"></clr-icon>
+      Secure payment processed by PayPal
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>

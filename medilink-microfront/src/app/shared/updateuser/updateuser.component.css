@@ -1,0 +1,181 @@
+/* Container for the update user form */
+.container {
+    max-width: 500px; /* Match Login and Registration form width */
+    margin: 50px auto; /* Center the form with consistent margin */
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12); /* Match Competitions Section shadow */
+    font-family: 'Inter', sans-serif; /* Match typography from Problems List */
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #1e3a8a, #3b82f6); /* Deep navy blue gradient, matching Login form */
+}
+
+/* Form header */
+.container h2 {
+    font-size: 36px;
+    color: #1e3a8a; /* Deep navy blue for title */
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.container h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 4px;
+    background: #2dd4bf; /* Muted teal underline, matching Login form */
+    border-radius: 2px;
+}
+
+/* Error message */
+.container .error-message {
+    color: #f44336; /* Red for errors, matching Login form */
+    background-color: #ffebee; /* Light red background, matching Posts List error message */
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Fade-in animation for error messages */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form styling */
+.update-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Consistent spacing between form elements, matching Login form */
+}
+
+/* Form card */
+.form-card {
+    background: #fafafa; /* Light gray background, matching Profile Information section */
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Match spacing between form groups */
+}
+
+/* Form group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Space between label and input, matching Login form */
+}
+
+.form-group label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e3a8a; /* Deep navy blue for labels, matching Login form */
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #1f2937;
+    background: #ffffff; /* White background for inputs */
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.form-group input:focus {
+    border-color: #2dd4bf; /* Muted teal focus border, matching Login form */
+    background: #fafafa; /* Light gray on focus to match Login form */
+    outline: none;
+    box-shadow: 0 0 8px rgba(45, 212, 191, 0.2); /* Match Login form focus state */
+}
+
+/* Update button */
+.update-btn {
+    background: #2dd4bf; /* Solid muted teal, matching Login form */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(45, 212, 191, 0.3);
+    align-self: center; /* Center the button, matching Login form */
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between text and icon */
+    margin-top: 20px; /* Add top margin for spacing */
+}
+
+.update-btn:disabled {
+    background: #b2bec3; /* Disabled state, matching previous buttons */
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+.update-btn:not(:disabled):hover {
+    background: #5eead4; /* Lighter teal on hover, matching Login form */
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(94, 234, 212, 0.4);
+}
+
+.update-btn:not(:disabled):active {
+    background: #1e40af; /* Slightly darker navy blue for active state, matching Login form */
+    transform: scale(1);
+}
+
+/* Button text */
+.update-btn .btn-text {
+    display: inline-block;
+}
+
+/* Loading icon (assuming a spinning animation) */
+.update-btn .btn-icon.loading::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Spinning animation for loading state */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
