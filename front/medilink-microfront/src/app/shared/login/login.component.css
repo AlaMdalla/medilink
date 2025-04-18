@@ -1,0 +1,155 @@
+/* Container for the login form */
+.container {
+    max-width: 500px; /* Match typical content width for user-facing pages, narrower for a form */
+    margin: 50px auto; /* Center the form with consistent margin */
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12); /* Match Competitions Section shadow */
+    font-family: 'Inter', sans-serif; /* Match typography from Problems List */
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #1e3a8a, #3b82f6); /* Deep navy blue gradient, matching Competitions Section */
+}
+
+/* Form header */
+.container h2 {
+    font-size: 36px;
+    color: #1e3a8a; /* Deep navy blue for title */
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.container h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 4px;
+    background: #2dd4bf; /* Muted teal underline, matching Courses Section */
+    border-radius: 2px;
+}
+
+/* Error message */
+.container .error-message {
+    color: #f44336; /* Red for errors, matching Hard difficulty badge */
+    background-color: #ffebee; /* Light red background, matching Posts List error message */
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Fade-in animation for error messages */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form styling */
+.container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Consistent spacing between form elements */
+}
+
+/* Form group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Space between label and input */
+}
+
+.form-group label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e3a8a; /* Deep navy blue for labels */
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #1f2937;
+    background: #fafafa; /* Light gray background, matching Problems List */
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.form-group input:focus {
+    border-color: #2dd4bf; /* Muted teal focus border, matching button hover */
+    background: #ffffff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(45, 212, 191, 0.2); /* Match Problems List focus state */
+}
+
+/* Submit button */
+.container button[type="submit"] {
+    background: #2dd4bf; /* Solid muted teal, matching Join buttons */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(45, 212, 191, 0.3);
+    align-self: center; /* Center the button */
+}
+
+.container button[type="submit"]:hover {
+    background: #5eead4; /* Lighter teal on hover, matching Join buttons */
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(94, 234, 212, 0.4);
+}
+
+.container button[type="submit"]:active {
+    background: #1e40af; /* Slightly darker navy blue for active state */
+    transform: scale(1);
+}
+
+/* Link text */
+.container .link-text {
+    text-align: center;
+    font-size: 14px;
+    color: #6b7280; /* Match secondary text color from previous components */
+    margin-top: 20px;
+}
+
+.container .link-text a {
+    color: #1e3a8a; /* Deep navy blue for links */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.container .link-text a:hover {
+    color: #2dd4bf; /* Muted teal on hover, matching link hover effects */
+}

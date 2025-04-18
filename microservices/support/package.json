@@ -1,0 +1,21 @@
+{
+  "name": "service",
+  "version": "1.0.0",
+  "description": "Node service registered with Eureka",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "eureka-js-client": "^4.5.0",
+    "express": "^4.18.4",
+    "mysql2": "^3.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": []
+}

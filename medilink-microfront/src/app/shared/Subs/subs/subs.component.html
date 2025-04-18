@@ -1,0 +1,38 @@
+<div class="subscriptions-display-container">
+    <div class="management-header">
+        <h2>Choose Your Subscription Plan</h2>
+        <p class="header-subtitle">Unlock the best learning experience with our tailored plans!</p>
+    </div>
+
+    <!-- Subscriptions Grid -->
+    <div class="subscriptions-grid" *ngIf="displayedSubscriptions.length > 0; else noSubscriptions">
+        <div *ngFor="let sub of displayedSubscriptions; let i = index" class="subscription-card" [ngClass]="{'popular': i === 1}">
+            <!-- Popular Badge for the second plan (index 1) -->
+            <div class="popular-badge" *ngIf="i === 1">Most Popular</div>
+
+            <div class="subscription-header">
+                <h3 class="subscription-title">{{ sub.typesub }}</h3>
+                <p class="subscription-description">{{ sub.subsDescription }}</p>
+            </div>
+
+            <div class="subscription-pricing">
+                <p class="discounted-price">
+                    <span class="price-amount">{{ sub.subsDiscountedPrice | currency:'USD' }}</span>
+                    <span class="price-period">/month</span>
+                </p>
+                <p class="actual-price"><s>{{ sub.subsActualPrice | currency:'USD' }}</s> /month</p>
+            </div>
+
+           
+
+            <div class="subscription-actions">
+                <button class="btn-subscribe">Subscribe Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Subscriptions Message -->
+    <ng-template #noSubscriptions>
+        <div class="no-subscriptions">No subscription plans available.</div>
+    </ng-template>
+</div>

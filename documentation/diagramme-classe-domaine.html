@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservices Diagram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+        .service {
+            border: 2px solid black;
+            padding: 10px;
+            width: 250px;
+            background-color: #f9f9f9;
+        }
+        .title {
+            font-weight: bold;
+            text-align: center;
+            background-color: #555;
+            color: white;
+            padding: 5px;
+        }
+        .entity {
+            margin: 10px;
+            padding: 5px;
+            border: 1px solid gray;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="service">
+        <div class="title">User Service</div>
+        <div class="entity">User</div>
+        <div class="entity">Patient</div>
+        <div class="entity">Doctor</div>
+    </div>
+
+    <div class="service">
+        <div class="title">Appointment Service</div>
+        <div class="entity">Rendezvous</div>
+        <div class="entity">Consultation</div>
+    </div>
+
+    <div class="service">
+        <div class="title">Payment Service</div>
+        <div class="entity">Payment</div>
+    </div>
+
+    <div class="service">
+        <div class="title">Prescription Service</div>
+        <div class="entity">Prescription</div>
+    </div>
+
+    <div class="service">
+        <div class="title">Notification Service</div>
+        <div class="entity">Notification</div>
+    </div>
+</div>
+</body>
+</html>

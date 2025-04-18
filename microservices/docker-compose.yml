@@ -1,0 +1,186 @@
+version: '3.8'
+
+services:
+  eureka:
+    build: ./eureka-server
+    image: eureka:latest
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+    depends_on:
+      - configserver
+    restart: always
+
+  gateway:
+    build: ./gateway/getway
+    image: gateway:latest
+    container_name: gateway
+    ports:
+      - "8560:8560"
+    depends_on:
+      - configserver
+      - eureka
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+    networks:
+      - microservices-network
+    restart: always
+
+  configserver:
+    build: ./springConfig
+    image: configserver:latest
+    container_name: configserver-service
+    ports:
+      - "8888:8888"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+    networks:
+      - microservices-network
+    restart: always
+
+  notification:
+    build: ./notification
+    image: notifications:latest
+    container_name: notifications-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka
+      - gateway
+      - configserver
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - microservices-network
+    restart: always
+
+  consultation:
+    build: ./consultation
+    image: consultation:latest
+    container_name: consultation-service
+    ports:
+      - "8902:8902"
+    depends_on:
+      - configserver
+      - Esbitarsql
+      - eureka
+      - gateway
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://Esbitarsql:3306/E-sbitar?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+    networks:
+      - microservices-network
+    restart: always
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0.6
+    container_name: keycloak
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./keycloak-data:/opt/keycloak/data
+    command: start-dev
+    networks:
+      - microservices-network
+    restart: always
+
+  user:
+    build: ./keycloak
+    image: user_keycloak:latest
+    container_name: user_keycloak
+    ports:
+      - "8081:8081"
+    depends_on:
+      - configserver
+      - eureka
+      - gateway
+      - keycloak
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+    networks:
+      - microservices-network
+    restart: always
+
+  rendezvous:
+    build: ./rendez-vous
+    image: rendezvous:latest
+    container_name: rendezvous-service
+    ports:
+      - "8900:8900"
+    depends_on:
+      - Esbitarsql
+      - eureka
+      - gateway
+      - configserver
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://Esbitarsql:3306/E-sbitar?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+    networks:
+      - microservices-network
+    restart: always
+
+  subscription:
+    build: ./subscription
+    image: subscription:latest
+    container_name: subscription-service
+    ports:
+      - "8086:8086"
+    depends_on:
+      - Esbitarsql
+      - eureka
+      - configserver
+      - gateway
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://Esbitarsql:3306/E-sbitar?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+    networks:
+      - microservices-network
+    restart: always
+
+  ordenance:
+    build: ./ordenance
+    image: ordenance:latest
+    container_name: ordenance-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - Esbitarsql
+      - eureka
+      - configserver
+      - gateway
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://Esbitarsql:3306/E-sbitar?createDatabaseIfNotExist=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - microservices-network
+    restart: always
+
+  Esbitarsql:
+    image: mysql:latest
+    container_name: Esbitarsql
+    environment:
+      MYSQL_ROOT_PASSWORD: ala
+      MYSQL_DATABASE: E-sbitar
+    volumes:
+      - ../Esbitarsql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pala"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - microservices-network
+    restart: always
+
+networks:
+  microservices-network:
+    driver: bridge
