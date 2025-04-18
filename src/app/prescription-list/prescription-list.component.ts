@@ -10,7 +10,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class PrescriptionListComponent implements OnInit {
   prescriptions: Prescription[] = [];
+  filteredPrescriptions: Prescription[] = [];
   displayedColumns: string[] = ['id', 'doctorId', 'patientId', 'date', 'medicationList', 'actions'];
+  searchMedication: string = '';
+  sortOrder: 'asc' | 'desc' | 'none' = 'none';
 
   constructor(
     private prescriptionService: PrescriptionService,
@@ -23,7 +26,10 @@ export class PrescriptionListComponent implements OnInit {
 
   loadPrescriptions(): void {
     this.prescriptionService.getPrescriptions().subscribe({
-      next: (data) => (this.prescriptions = data),
+      next: (data) => {
+        this.prescriptions = data;
+        this.applyFiltersAndSort(); // Apply filters and sorting after loading
+      },
       error: () => this.snackBar.open('Error loading prescriptions', 'Close', { duration: 3000 })
     });
   }
@@ -38,5 +44,48 @@ export class PrescriptionListComponent implements OnInit {
         error: () => this.snackBar.open('Error deleting prescription', 'Close', { duration: 3000 })
       });
     }
+  }
+
+  // Filter by medication
+  filterByMedication(): void {
+    if (!this.searchMedication.trim()) {
+      this.filteredPrescriptions = [...this.prescriptions];
+    } else {
+      const term = this.searchMedication.toLowerCase();
+      this.filteredPrescriptions = this.prescriptions.filter(prescription =>
+        prescription.medicationList.toLowerCase().includes(term)
+      );
+    }
+    this.applySort(); // Re-apply sorting after filtering
+  }
+
+  // Sort by date
+  applySort(): void {
+    if (this.sortOrder === 'none') {
+      this.filteredPrescriptions = [...this.filteredPrescriptions];
+    } else {
+      this.filteredPrescriptions.sort((a, b) => {
+        const dateA = new Date(a.date).getTime();
+        const dateB = new Date(b.date).getTime();
+        return this.sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+      });
+    }
+  }
+
+  // Apply both filters and sorting
+  applyFiltersAndSort(): void {
+    this.filterByMedication();
+    this.applySort();
+  }
+
+  // Handle medication search input change
+  onSearchMedicationChange(): void {
+    this.applyFiltersAndSort();
+  }
+
+  // Handle sort order change
+  onSortChange(order: 'asc' | 'desc' | 'none'): void {
+    this.sortOrder = order;
+    this.applyFiltersAndSort();
   }
 }

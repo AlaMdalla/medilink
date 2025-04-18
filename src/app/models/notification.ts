@@ -3,7 +3,7 @@ export interface Notification {
     userId: number;
     message: string;
     status: NotificationStatus;
-    createdAt?: string; // Assuming LocalDateTime is serialized as a string
+    createdAt: string | Date; // Assuming LocalDateTime is serialized as a string
   }
   export enum NotificationStatus {
     SENT = 'SENT',

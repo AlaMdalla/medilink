@@ -1,8 +1,33 @@
 <div class="rendezvous-container">
   <h2 class="form-title">Rendez-Vous</h2>
   <div class="form-actions">
-    
+    <!-- Search by Status -->
+    <div class="search-container">
+      <label for="searchStatus">Search by Status:</label>
+      <input
+        id="searchStatus"
+        type="text"
+        [(ngModel)]="searchStatus"
+        (ngModelChange)="onSearchStatusChange()"
+        placeholder="Enter status..."
+      />
+    </div>
+    <!-- Sort by Date -->
+    <div class="sort-container">
+      <label for="sortOrder">Sort by Date:</label>
+      <select
+        id="sortOrder"
+        [(ngModel)]="sortOrder"
+        (ngModelChange)="onSortChange(sortOrder)"
+      >
+        <option value="none">None</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
   </div>
+  <!-- Rest of your table code remains unchanged -->
+</div>
   <table class="rendezvous-table">
     <thead>
       <tr>
@@ -13,9 +38,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let rv of rendezVousList">
+      <tr *ngFor="let rv of filteredRendezVous">
         <td>{{ rv.id }}</td>
-        <td>{{ rv.date  }}</td>
+        <td>{{ rv.date }}</td>
         <td>{{ rv.status }}</td>
         <td>
           <button class="btn btn-primary" (click)="editRendezVous(rv)">Edit</button>
@@ -24,4 +49,3 @@
       </tr>
     </tbody>
   </table>
-</div>

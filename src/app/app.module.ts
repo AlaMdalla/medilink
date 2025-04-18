@@ -1,4 +1,3 @@
-// src/app/app.module.ts
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -26,25 +25,22 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTableModule } from '@angular/material/table';
 
-
-
-import { MatTableModule } from '@angular/material/table'; // Ensure this is present
 import { UserSubscriptionViewComponent } from './shared/user-subscription-view/user-subscription-view.component';
 import { PaymentComponent } from './shared/payment/payment.component';
 import { SuccessComponent } from './shared/success/success.component';
 import { RendezVousListComponent } from './rendezvous-list/rendezvous-list.component';
-
 import { NotificationListComponent } from './notification-list/notification-list.component';
 import { NotificationFormComponent } from './notification-form/notification-form.component';
-
 import { RendezVousFormComponent } from './rendez-vous-form/rendez-vous-form.component';
 import { ConsultationListComponent } from './consultation-list/consultation-list.component';
-import { ConsultationFormComponent } from './consultation-form/consultation-form.component'; // Import here
+import { ConsultationFormComponent } from './consultation-form/consultation-form.component';
 import { SubscriptionListComponent } from './subscription-list/subscription-list.component';
 import { SubscriptionFormComponent } from './subscription-form/subscription-form.component';
 import { PrescriptionListComponent } from './prescription-list/prescription-list.component';
 import { PrescriptionFormComponent } from './prescription-form/prescription-form.component';
+
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
@@ -56,25 +52,21 @@ import { PrescriptionFormComponent } from './prescription-form/prescription-form
     SubscriptionFormComponent,
     PaymentComponent,
     SuccessComponent,
+    RendezVousListComponent, // Added
     RendezVousFormComponent,
     NotificationListComponent,
     NotificationFormComponent,
     SubscriptionListComponent,
-    RendezVousFormComponent,
-
     ConsultationListComponent,
     ConsultationFormComponent,
     PrescriptionListComponent,
     PrescriptionFormComponent
   ],
-  
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
-    MatTableModule, // Must be included
+    FormsModule, // Required for ngModel
     ReactiveFormsModule,
-    MatFormFieldModule,
     HttpClientModule,
     AppRoutingModule,
     CommonModule,
@@ -83,6 +75,7 @@ import { PrescriptionFormComponent } from './prescription-form/prescription-form
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
+    MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
     MatDialogModule,
@@ -90,7 +83,8 @@ import { PrescriptionFormComponent } from './prescription-form/prescription-form
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatMenuModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
