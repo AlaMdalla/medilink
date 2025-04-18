@@ -1,0 +1,4 @@
+com\alibou\keycloak\KeycloakApplication.class
+com\alibou\keycloak\DemoController.class
+com\alibou\keycloak\JwtAuthConverter.class
+com\alibou\keycloak\SecurityConfig.class

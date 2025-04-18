@@ -8,10 +8,16 @@
         <outputRelativeToContentRoot value="true" />
         <module name="notification" />
         <module name="keycloak" />
+        <module name="rendez-vous" />
+        <module name="paiement" />
+        <module name="consultation" />
         <module name="user" />
         <module name="ordenance" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="subscription" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
